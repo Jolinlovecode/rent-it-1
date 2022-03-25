@@ -9,6 +9,7 @@ The app lets users rent random items for their needs.
 🧰 Stack <br>
 - Front-end: React
   - routes handlers: `react-router-dom`
+  - state: React Context API
   - css: Bulma framework
 - Back-end: Express, Node
 
