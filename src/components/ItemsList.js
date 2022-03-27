@@ -31,4 +31,3 @@ export default function ItemsList(props) {
 
   );
 }
-

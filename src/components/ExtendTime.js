@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+// should go to the server -> go back notification -> match up all the renting time -> setTimeOut
+
 export default function ExtendTime(props) {
 
   // handle dropdown select
@@ -8,6 +10,10 @@ export default function ExtendTime(props) {
     setExtraHour(e.target.value);
     console.log("selected extraHour from ExtendTime.js", extraHour);
   }
+
+  /** click on confirm -> update
+    * just the rentingBasket (same logic with allItems dispatch -> get id -> find index of the obj -> dispatch with updated [])
+    */
   
   return (props.trigger) ? (
 

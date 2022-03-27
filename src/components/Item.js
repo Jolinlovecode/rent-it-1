@@ -62,13 +62,10 @@ export default function Item(props) {
             <div className="container mt-3">
               {/* <div className="is-clearfix"> */}
 
+              {/* use button handle() -> reducer and use the selectedItem{} */}
                 <div className="field is-pulled-right">
                   <Link className="button is-small is-outlined is-info is-pulled-right"
                     to={`/items/${item.id}`}>Go To Booking</Link>
-                    
-                  {/* <button className="button is-small is-outlined is-info is-pulled-right">
-                    <Link to={`/items/${item.id}`}>Go To Booking</Link>
-                  </button> */}
                 </div>
 
                 {/* <div className="field is-pulled-left">
