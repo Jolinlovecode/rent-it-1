@@ -38,7 +38,7 @@ export default function OnRenting() {
           }
         </div>
       </div>
-    <div>getTotalRenting: {getTotalRenting(rentingBasket)} - </div>
+    {/* <div>getTotalRenting: {getTotalRenting(rentingBasket)} - </div> */}
   </div>
 
   )

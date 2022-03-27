@@ -1,7 +1,6 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { useStateValue } from "../providers/StateProvider";
-import Notification from "./Notification";
-
+import ExtendTime from "./ExtendTime";
 /**
  * Item"s information
  * Act as each item"s page
@@ -9,6 +8,8 @@ import Notification from "./Notification";
 
 export default function OnRentingItem(props) {
   const {...item} = props;
+
+  // for remove the item from the on-renting page
   const [{rentingBasket}, dispatch] = useStateValue();
   console.log("renting basket from OnRentingItem.js: ", rentingBasket);
   const removeFromRenting = () => {
@@ -17,44 +18,51 @@ export default function OnRentingItem(props) {
       id: item.id,
     })
   }
-//Define an state to handle the visibility of form.
-  const [showForm, setShowForm] = useState(false);
-  const showMessage = () => {
-    setShowForm(!showForm);
-  }
-
+  // for extending the time of the item
+  const [extendTimeNoti, setExtendTimeNoti] =  useState(false);
 
   return (
     <div className=" column is-half">
       <div className="box">
-        <div className="media">
-          <div className="media-left">
-            <figure className="image is-64x64">
-              <img src={item.image} alt={item.title} />
-            </figure>
-          </div>
-          <div className="media-content">
-            <div className="container">
-              <b style={{ textTransform: "capitalize" }}>{item.title}</b>
-              <p className="small">{item.description}</p>
+        <div className="container mb-3">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image is-64x64">
+                <img src={item.image} alt={item.title} />
+              </figure>
             </div>
-            <div className="container mt-1 mb-1">
-              <div className="">You rent it for item.rentTime</div>
-            </div>
-              <div class="buttons has-addons is-small is-right">
-                <button class="button is-small is-rounded is-info is-outlined"
-                  onClick={showMessage}
-                  >Extend Time</button>
-                <button class="button is-small is-danger is-outlined"
-                  onClick={removeFromRenting}
-                  >Cancel</button>
+            <div className="media-content">
+              <div className="container">
+                <b style={{ textTransform: "capitalize" }}>{item.title}</b>
+                <p className="small">{item.description}</p>
               </div>
+            </div>
           </div>
         </div>
+
+        {/* Display renting detail */}
+        <div className="container pt-2">
+          {/* <div className="columns">
+            <div className="column"><small><b>Start time</b></small></div>
+            <div className="column"><small><b>End time</b></small></div>
+          </div> */}
+          <small>Counter</small>
+        
+          {/* Button and Extend Time form */}
+          <div className="buttons has-addons is-small is-right">
+            <button className="button is-small is-rounded is-info is-light"
+              // onClick={checkNoti}
+              onClick={()=>setExtendTimeNoti(true)}
+              >Extend Time</button>
+            <button className="button is-small is-danger is-light"
+              onClick={removeFromRenting}
+              >End</button>
+          </div>
+        </div>
+        <ExtendTime trigger={extendTimeNoti} setTrigger={setExtendTimeNoti} />
+      
       </div>
-      <Notification showForm={showForm} showMessage={showMessage} />
     </div>
 
   );
 }
-
