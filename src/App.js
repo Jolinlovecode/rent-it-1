@@ -1,42 +1,41 @@
-// import { Component } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import axios from "axios";
 // components
 import Header from "./components/Header";
-import ItemsList from './components/ItemsList';
+import ItemsList from "./components/ItemsList";
 import OnRenting from "./components/OnRenting";
 import ItemBooking from "./components/ItemBooking";
 import RentedHistory from "./components/RentedHistory";
 // stylesheet
-import './styles/App.css';
+import "./styles/App.css";
 // data
 import { useStateValue } from "./providers/StateProvider";
 
-
-export default function App(){
-// class App extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       user: null,
-//       cart: {},
-//       products: []
-//     };
-//     this.routerRef = React.createRef();
-//   }
-//   render() {
-    const [{allItems}] = useStateValue();
-
-    return (
-        <div className="App">
-          <Router>
-            <Header />
-            <Routes>
-              <Route path="/" element={<ItemsList items={allItems}/>} />
-              <Route path="/renting" element={<OnRenting />} />
-              <Route path="/items/:id" element={<ItemBooking />} />
-              <Route path="/rented" element={<RentedHistory />} />
-            </Routes>
-          </Router>
-        </div>
-    );
-  }
+export default function App() {
+  const [state, setState] = useState([]);
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://localhost:3000/items"),  
+    ]).then((all) => {
+      console.log("all:::", all[0]);
+      setState(all[0].data);
+      
+    });
+  }, []);
+  // const [{ allItems }] = useStateValue();
+  // console.log("allitems", allItems);  
+  return (
+    <div className="App">
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<ItemsList items={state} />} />
+          <Route path="/renting" element={<OnRenting />} />
+          <Route path="/items/:id" element={<ItemBooking />} />
+          <Route path="/rented" element={<RentedHistory />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+}

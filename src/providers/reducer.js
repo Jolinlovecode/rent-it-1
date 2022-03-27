@@ -1,4 +1,6 @@
 import items from '../data/db';
+import { useEffect } from 'react';
+import axios from "axios";
 /**
  * Handle when user click 'rent now' button on the item
  * Push/Remove the item into on-renting page with Context API
@@ -19,7 +21,16 @@ export const getTotalRenting = rentingBasket => {
 }
 
 const reducer = (state, action) => {
-  console.log(action);
+
+  const initialState = {
+    allItems:[...items],
+    selectedItem:{},
+    rentingBasket:[],
+  };
+
+
+  // console.log(action);
+ 
 
   switch(action.type) {
     case 'UPDATE_ITEMS':
