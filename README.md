@@ -12,6 +12,7 @@ The app lets users rent random items for their needs.
   - state: React Context API
   - css: Bulma framework
 - Back-end: Express, Node
+  - external db: JSON server
 
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
