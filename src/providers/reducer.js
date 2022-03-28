@@ -1,6 +1,5 @@
-import items from '../data/db';
-import { useEffect } from 'react';
-import axios from "axios";
+// import items from '../data/db';
+
 /**
  * Handle when user click 'rent now' button on the item
  * Push/Remove the item into on-renting page with Context API
@@ -9,9 +8,10 @@ import axios from "axios";
  */
 
 export const initialState = {
-  allItems:[...items],
+  // allItems:[...items],
   selectedItem:{},
   rentingBasket:[],
+  rentedHistory:[]
 };
 
 // selector helper - not working!
@@ -23,7 +23,7 @@ export const getTotalRenting = rentingBasket => {
 const reducer = (state, action) => {
 
   const initialState = {
-    allItems:[...items],
+    // allItems:[...items],
     selectedItem:{},
     rentingBasket:[],
   };
@@ -47,6 +47,7 @@ const reducer = (state, action) => {
       return{
         ...state,
         rentingBasket: [...state.rentingBasket, action.item],
+        rentedHistory: [...state.rentedHistory, action.item]
       };
     case 'REMOVE_FROM_RENTING':
       const index = state.rentingBasket.findIndex(

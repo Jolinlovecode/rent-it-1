@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useStateValue } from '../providers/StateProvider';
+import axios from "axios";
 /**
  * Booking component
  *  display chosen time
@@ -78,7 +79,17 @@ export default function ItemBooking(props) {
 
   // because the redirect is using Link -> use this to find the item
   const {id } = useParams()
-  const item = allItems.find((selectItem)=>{ return Number(selectItem.id) === Number(id) })
+
+  const [item, setItem] = useState({});
+  useEffect(() => {
+      Promise.all([
+        axios.get(`http://localhost:3000/items/${id}`),  
+      ]).then((item) => {
+        console.log("item:::", item);
+        setItem(item[0].data);
+      });
+    }, []);
+  // const item = allItems.find((selectItem)=>{ return Number(selectItem.id) === Number(id) })
   console.log('id here',id);
   console.log('item here',item);
   // keep it find item down here after the addToRenting (shouldn't have bug just to make sure ^)
