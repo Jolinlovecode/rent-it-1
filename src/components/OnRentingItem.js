@@ -10,13 +10,30 @@ export default function OnRentingItem(props) {
   const {...item} = props;
 
   // for remove the item from the on-renting page
-  const [{rentingBasket}, dispatch] = useStateValue();
+  const [{rentingBasket, allItems}, dispatch] = useStateValue();
   console.log("renting basket from OnRentingItem.js: ", rentingBasket);
   const removeFromRenting = () => {
+    const itemsToUpdate = [...allItems];
+    const foundIndex = itemsToUpdate.findIndex((i)=>{
+      return i.id === item.id
+    })
+    const itemToUpdate = {
+      ...item,
+      isRenting: false,
+      rentTime: 0,
+    }
+    itemsToUpdate[foundIndex] = itemToUpdate;
+
+    // removing the item from the <OnRenting>
     dispatch({
       type: "REMOVE_FROM_RENTING", 
       id: item.id,
     })
+    // then update its renting status
+    dispatch({
+      type: 'UPDATE_ITEMS',
+      items: itemsToUpdate,
+    });
   }
   // for extending the time of the item
   const [extendTimeNoti, setExtendTimeNoti] =  useState(false);

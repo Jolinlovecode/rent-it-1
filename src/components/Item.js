@@ -56,53 +56,17 @@ export default function Item(props) {
               </div>
             </div>
             <div>{item.description}</div>
-
-
-            {/* ------- */}
-            <div className="container mt-3">
-              {/* <div className="is-clearfix"> */}
-
-              {/* use button handle() -> reducer and use the selectedItem{} */}
-                <div className="field is-pulled-right">
-                  <Link className="button is-small is-outlined is-info is-pulled-right"
-                    to={`/items/${item.id}`}>Go To Booking</Link>
-                </div>
-
-                {/* <div className="field is-pulled-left">
-                  <p className="control"><small>Rent for: </small>
-                    <span className="select is-small is-info">
-                      {item.isRenting ? (
-                        <select disabled>
-                          <option selected>hrs</option>
-                          <option value="0">0 hrs</option>
-                        </select>
-                      ) : (
-                        <select>
-                          <option selected>hrs</option>
-                          <option value="1">1 hr</option>
-                          <option value="2">2 hrs</option>
-                          <option value="3">3 hrs</option>
-                          <option value="4">4 hrs</option>
-                        </select>
-                      )}
-                    </span>
-                  </p>
-                </div> */}
-                {item.isRenting ? (
-                  <button className="button is-small is-outlined is-link is-pulled-right"
-                    disabled> Rent Now </button>
-                  ):(
-                  <button className="button is-small is-outlined is-info is-pulled-right"
-                    // onClick={()=>addToRenting(item)}
-                    onClick={addToRenting}
-                    > Rent Now </button>
-                )}
-              {/* </div> */}
+              {/* if using <button> handle() -> reducer and use the selectedItem{} */}
+            <div className="container">
+              <Link className="button is-small is-outlined is-info is-pulled-right"
+                to={item.isRenting ? '#' : `/items/${item.id}`}
+                disabled={item.isRenting}
+                >Go To Booking</Link>
             </div>
           </div>
         </div>
       </div>
     </div>
-
+    
   );
 }

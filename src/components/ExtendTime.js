@@ -11,10 +11,9 @@ export default function ExtendTime(props) {
     console.log("selected extraHour from ExtendTime.js", extraHour);
   }
 
-  /** click on confirm -> update
-    * just the rentingBasket (same logic with allItems dispatch -> get id -> find index of the obj -> dispatch with updated [])
-    */
-  
+/** click on confirm -> update
+  * just the rentingBasket (same logic with allItems dispatch -> get id -> find index of the obj -> dispatch with updated [])
+  */
   return (props.trigger) ? (
 
     <article className="message is-warning is-small">
