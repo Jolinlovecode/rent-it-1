@@ -14,12 +14,12 @@ export default function Item(props) {
   // handle 'rent-now' button to get the data of the item
   const [{rentingBasket}, dispatch] = useStateValue();
   console.log("renting basket from Item.js: ", rentingBasket);
-  const addToRenting = () => {
-    // push item into the context layer
-    dispatch({
-      type: "ADD_TO_RENTING",
-      item: {
-        ...item
+  // const addToRenting = () => {
+  //   // push item into the context layer
+  //   dispatch({
+  //     type: "ADD_TO_RENTING",
+  //     item: {
+  //       ...item
         // id: item.id,
         // image: item.image,
         // title: item.title,
@@ -27,9 +27,9 @@ export default function Item(props) {
         // cost: item.cost,
         // isRenting: item.isRenting,
         // rentTime: item.rentTime
-      },
-    });
-  }
+  //     },
+  //   });
+  // }
 
   return (
 

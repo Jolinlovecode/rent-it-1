@@ -1,43 +1,56 @@
 import React, { useState } from "react";
 import { useStateValue } from "../providers/StateProvider";
 import ExtendTime from "./ExtendTime";
+import Countdown from "react-countdown";
 /**
  * Item"s information
  * Act as each item"s page
  */
 
 export default function OnRentingItem(props) {
-  const {...item} = props;
+  const { ...item } = props;
 
   // for remove the item from the on-renting page
-  const [{rentingBasket, allItems}, dispatch] = useStateValue();
+  const [{ rentingBasket, allItems }, dispatch] = useStateValue();
   console.log("renting basket from OnRentingItem.js: ", rentingBasket);
   const removeFromRenting = () => {
     const itemsToUpdate = [...allItems];
-    const foundIndex = itemsToUpdate.findIndex((i)=>{
-      return i.id === item.id
-    })
+    const foundIndex = itemsToUpdate.findIndex((i) => {
+      return i.id === item.id;
+    });
     const itemToUpdate = {
       ...item,
       isRenting: false,
       rentTime: 0,
-    }
+    };
     itemsToUpdate[foundIndex] = itemToUpdate;
 
     // removing the item from the <OnRenting>
     dispatch({
-      type: "REMOVE_FROM_RENTING", 
+      type: "REMOVE_FROM_RENTING",
       id: item.id,
-    })
+    });
     // then update its renting status
     dispatch({
-      type: 'UPDATE_ITEMS',
+      type: "UPDATE_ITEMS",
       items: itemsToUpdate,
     });
-  }
+  };
   // for extending the time of the item
-  const [extendTimeNoti, setExtendTimeNoti] =  useState(false);
-
+  const [extendTimeNoti, setExtendTimeNoti] = useState(false);
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return 'Time is over!';
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {hours}:{minutes}:{seconds}
+        </span>
+      );
+    }
+  };
   return (
     <div className=" column is-half">
       <div className="box">
@@ -63,23 +76,33 @@ export default function OnRentingItem(props) {
             <div className="column"><small><b>Start time</b></small></div>
             <div className="column"><small><b>End time</b></small></div>
           </div> */}
-          <small>Counter</small>
-        
+          <Countdown
+            date={Date.now() + (item.endTime - Date.now())}
+            renderer={renderer}
+          />
           {/* Button and Extend Time form */}
           <div className="buttons has-addons is-small is-right">
-            <button className="button is-small is-rounded is-info is-light"
+            <button
+              className="button is-small is-rounded is-info is-light"
               // onClick={checkNoti}
-              onClick={()=>setExtendTimeNoti(true)}
-              >Extend Time</button>
-            <button className="button is-small is-danger is-light"
+              onClick={() => setExtendTimeNoti(true)}
+            >
+              Extend Time
+            </button>
+            <button
+              className="button is-small is-danger is-light"
               onClick={removeFromRenting}
-              >End</button>
+            >
+              End
+            </button>
           </div>
         </div>
-        <ExtendTime trigger={extendTimeNoti} setTrigger={setExtendTimeNoti} />
-      
+        <ExtendTime
+          trigger={extendTimeNoti}
+          setTrigger={setExtendTimeNoti}
+          item={item}
+        />
       </div>
     </div>
-
   );
 }

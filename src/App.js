@@ -27,6 +27,16 @@ export default function App() {
     });
   }, []);
 
+  // function rentedItems(props) {
+    //   return dispatch =>
+    //     axios.post("http://localhost:3000/rented", props, config)
+    //       .then(response => {
+    //         dispatch({ type: types.AUTH_USER });
+    //         localStorage.setItem('token', response.data.token);
+    //         browserHistory.push('/rented'); 
+    //       });
+    // }
+
   
   return (
     <div className="App">
@@ -34,8 +44,8 @@ export default function App() {
         <Header />
         <Routes>
           <Route path="/" element={<ItemsList items={state} />} />
-          <Route path="/renting" element={<OnRenting />} />
           <Route path="/items/:id" element={<ItemBooking items={state} />}  />
+          <Route path="/renting" element={<OnRenting />} />
           <Route path="/rented" element={<RentedHistory />} />
         </Routes>
       </Router>

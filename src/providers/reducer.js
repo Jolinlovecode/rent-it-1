@@ -1,5 +1,4 @@
 // import items from '../data/db';
-
 /**
  * Handle when user click 'rent now' button on the item
  * Push/Remove the item into on-renting page with Context API
@@ -11,7 +10,7 @@ export const initialState = {
   // allItems:[...items],
   selectedItem:{},
   rentingBasket:[],
-  rentedHistory:[]
+  rentedBasket: [],
 };
 
 // selector helper - not working!
@@ -21,16 +20,7 @@ export const getTotalRenting = rentingBasket => {
 }
 
 const reducer = (state, action) => {
-
-  const initialState = {
-    // allItems:[...items],
-    selectedItem:{},
-    rentingBasket:[],
-  };
-
-
-  // console.log(action);
- 
+  console.log(action);
 
   switch(action.type) {
     case 'UPDATE_ITEMS':
@@ -38,17 +28,16 @@ const reducer = (state, action) => {
         ...state,
         allItems: [...action.items]
       };
-    case 'SET_SELECTED_ITEM':
+      case 'ADD_TO_RENTING':
+        return{
+          ...state,
+          rentingBasket: [...state.rentingBasket, action.item],
+        };
+    case 'UPDATE_RENTING':
       return{
         ...state,
-        selectedItem: {...action.item}
-      };
-    case 'ADD_TO_RENTING':
-      return{
-        ...state,
-        rentingBasket: [...state.rentingBasket, action.item],
-        rentedHistory: [...state.rentedHistory, action.item]
-      };
+        rentingBasket: [...action.items],
+      }
     case 'REMOVE_FROM_RENTING':
       const index = state.rentingBasket.findIndex(
         (thisItem) => thisItem.id === action.id
@@ -59,9 +48,19 @@ const reducer = (state, action) => {
         tempBasket.splice(index, 1);
       }
       return {
-        ...state, 
-        rentingBasket: tempBasket
+        ...state,
+        rentingBasket: tempBasket,
       };
+    case 'ADD_TO_RENTED':
+      return{
+        ...state,
+        rentedBasket: [...state.rentedBasket, action.item],
+      };
+      case 'UPDATE_RENTED':
+        return{
+          ...state,
+          rentedBasket: [...action.item],
+        }
     default:
       return state;
   }
