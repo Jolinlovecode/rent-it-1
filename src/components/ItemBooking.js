@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useStateValue } from '../providers/StateProvider';
 import axios from "axios";
+
+
 /**
  * Booking component
  *  display chosen time
@@ -16,6 +18,7 @@ import axios from "axios";
  */
 
 export default function ItemBooking(props) {
+
   // const {...item} = props;
   console.log("userParams from ItemBooking.js", useParams());
   // const {id} = useParams();
@@ -27,9 +30,12 @@ export default function ItemBooking(props) {
     // rentHour = e.target.value;
     console.log("selected rentHour from ItemBooking.js", rentHour);
   }
-  const [{rentingBasket, allItems}, dispatch] = useStateValue();
+  const [{rentingBasket }, dispatch] = useStateValue();
+
   const addToRenting = () => {
-    const itemsToUpdate = [...allItems];
+    //  console.log("props", props.items);
+    const itemsToUpdate = [...props.items];
+
     // find the specific item in allItems
     const foundIndex = itemsToUpdate.findIndex((i)=>{
       return i.id === item.id
@@ -57,25 +63,6 @@ export default function ItemBooking(props) {
       items: itemsToUpdate,
     });
   }
-  // handle 'rent-now' button to get the data of the item
-  // const [{rentingBasket}, dispatch] = useStateValue();
-  // console.log("renting basket from ItemBooking.js: ", rentingBasket);
-  // const addToRenting = () => {
-  //   // push item into the context layer
-  //   dispatch({
-  //     type: "ADD_TO_RENTING",
-  //     item: {
-  //       ...item
-  //       // id: item.id,
-  //       // image: item.image,
-  //       // title: item.title,
-  //       // description: item.description,
-  //       // cost: item.cost,
-  //       // isRenting: item.isRenting,
-  //       // rentTime: item.rentTime
-  //     },
-  //   });
-  // }
 
   // because the redirect is using Link -> use this to find the item
   const {id } = useParams()
@@ -151,19 +138,24 @@ export default function ItemBooking(props) {
                     <option value="4">4 hrs</option>
                   </select>
                 </div>
-
-                <button className="button is-info is-outlined is-rounded is-pulled-right"
-                  onClick={addToRenting}
-                  // unable the button when item is rented 
-                  disabled={item.isRenting}
-                  >Rent Now</button>
+                <div>
+                  {item.isRenting ? (
+                    <button className="button is-info is-outlined is-rounded is-pulled-right"
+                      disabled> Rent Now </button>
+                    ):(
+                    <button className="button is-info is-outlined is-rounded is-pulled-right"
+                      onClick={addToRenting}
+                      > Rent Now </button>
+                )}
+                </div>
               </div>
-
             </div>
           </div>
         </div>
-
       </div>
     </div>
   )
 }
+
+
+// 

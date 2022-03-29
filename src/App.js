@@ -14,15 +14,8 @@ import { useStateValue } from "./providers/StateProvider";
 
 export default function App() {
 
-  // const [state, setState] = useState({
-  //   items: [],
-  //   days: [],
-  //   appointments: {},
-  //   interviewers: {}
-  // });
 
   const [state, setState] = useState([]);
-  // const [selectedItem, setSelectdItem] = useState({});
 
   useEffect(() => {
     Promise.all([
@@ -34,16 +27,7 @@ export default function App() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   Promise.all([
-  //     axios.post(`http://localhost:3000/items/${id}`),  
-  //   ]).then((all) => {
-  //     // console.log("all:::", all[0]);
-  //     setState(all[0].data);
-  //   });
-  // }, []);
-  // const [{ allItems }] = useStateValue();
-  // console.log("allitems", allItems);  
+  
   return (
     <div className="App">
       <Router>
@@ -51,7 +35,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<ItemsList items={state} />} />
           <Route path="/renting" element={<OnRenting />} />
-          <Route path="/items/:id" element={<ItemBooking />}  />
+          <Route path="/items/:id" element={<ItemBooking items={state} />}  />
           <Route path="/rented" element={<RentedHistory />} />
         </Routes>
       </Router>
