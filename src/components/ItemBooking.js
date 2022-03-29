@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useStateValue } from '../providers/StateProvider';
 import axios from "axios";
+import { format } from "date-fns";
+import CurrencyFormat from 'react-currency-format';
 
 
 /**
@@ -18,18 +20,34 @@ import axios from "axios";
  */
 
 export default function ItemBooking(props) {
-
-  // const {...item} = props;
-  console.log("userParams from ItemBooking.js", useParams());
-  // const {id} = useParams();
-
   // handle dropdown select
-  const [rentHour, setRentHour] = useState(0);
+  const [rentPeriod, setRentHour] = useState(null);
   const getSelectedHr = e => {
     setRentHour(e.target.value);
-    // rentHour = e.target.value;
-    console.log("selected rentHour from ItemBooking.js", rentHour);
+    // console.log the previous selected value
+    // console.log("selected rentPeriod from ItemBooking.js", rentPeriod);
   }
+ // calculate endTime of the item
+  const calculateEndTime = (startTime, rentPeriod) => {
+    const endTime = new Date(startTime.getTime());  // won't be interferred the currentTime when calculate
+    endTime.setHours(startTime.getHours() + Number(rentPeriod));
+    return endTime;
+};
+
+  const timeFormatDisplay = (t) => {
+    return format(t, "hh:mm a - MMM dd, yyyy");
+  }
+
+  const displayHrFormat = (hr) => {
+    if (Number(hr) === 0) return '-';
+    else if (Number(hr) === 1) return `${hr} hour`;
+    else return `${hr} hours`;
+  }
+
+  const total = (cost, rentPeriod) => {
+    return (cost * rentPeriod) + 0.3;
+  }
+
   const [{rentingBasket }, dispatch] = useStateValue();
 
   const addToRenting = () => {
@@ -40,27 +58,40 @@ export default function ItemBooking(props) {
     const foundIndex = itemsToUpdate.findIndex((i)=>{
       return i.id === item.id
     })
+
+    const startTime = new Date();
+    const endTime = calculateEndTime(startTime, rentPeriod);
+    const total = (item.cost * rentPeriod) + 0.3;
+
     const itemToUpdate = {
       ...item,
       isRenting: true,
-      rentTime: rentHour,
+      startTime: startTime,
+      endTime: endTime,
     }
     itemsToUpdate[foundIndex] = itemToUpdate;
 
     dispatch({
       type: "ADD_TO_RENTING",
       item: itemToUpdate,
-      // item: {
-      //   ...item,
-      //   isRenting: true,
-      //   rentTime: rentHour,
-      // },
     });
     // axios -> change server
     // dispath -> changing state in the browser
     dispatch({
       type: 'UPDATE_ITEMS',
       items: itemsToUpdate,
+    });
+    dispatch({
+      type: "ADD_TO_RENTED",
+      item: {
+        id: item.id, 
+        image: item.image,
+        title: item.title,
+        description: item.description,
+        total: total,
+        startTime: startTime,
+        endTime: endTime,
+      },
     });
   }
 
@@ -98,7 +129,16 @@ export default function ItemBooking(props) {
               <div className="is-clearfix">
                 <div className="field is-pulled-left">
                   <b className='title is-4 pr-3' style={{ textTransform: "capitalize" }}>{item.title}</b>
-                  <div className="tag is-warning is-rounded">${item.cost}/hr </div>
+                  <div className="tag is-warning is-rounded">
+                    <CurrencyFormat
+                      // renderTex={(value) => ({value})}
+                      decimalScale={2}
+                      value={item.cost}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"CAD $"}
+                    />/hr
+                  </div>
                 </div>
                 <div className="field is-pulled-right">
                   {item.isRenting ? (
@@ -111,43 +151,54 @@ export default function ItemBooking(props) {
               <div className="container mt-4">{item.description}</div>
             </div>
             <div className="container mt-4">
-              <strong>----Receipt----</strong>
-              <p>
-                Renting cost per hour: ${item.cost}
-              </p>
-              <p>
-                Item will be rent for {rentHour} hours.
-              </p>
-              <p>
-                Fee: $0.3
-              </p>
-              <strong>Total: ${item.cost * rentHour * 0.3}</strong>
+              <div className='container'>
+                <strong>----Price Quote----</strong>
+                <p>
+                  Item will be rent for <strong>{displayHrFormat(rentPeriod)}</strong>
+                  <br></br>
+                  <strong>FROM&ensp;</strong> {timeFormatDisplay(new Date())}<br></br>
+                  <strong>TO&ensp;&ensp;&ensp;&ensp;</strong> {timeFormatDisplay(calculateEndTime(new Date(), rentPeriod))}
+                </p>
+              </div>
+              <div className='is-clearfix mt-4'>
+                <p>
+                  Service fee: $0.3
+                </p>
+                <div className='field is-pulled-left'>
+                  <strong>Total: </strong>
+                  <CurrencyFormat
+                    // renderTex={(value) => ({value})}
+                    decimalScale={2}
+                    value={total(item.cost, rentPeriod)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"CAD $"}
+                  />
+                </div>
+                <div className='field is-pulled-right'>payment api</div>
+              </div>
             </div>
+            
+            {/* Buttons section */}
             <div className="container">
-              <div className="is-clearfix mt-4">
+              <div className="is-clearfix">
                 <div className="select is-rounded is-pulled-left">
-                  <select name="rentHour"
-                    defaultValue={rentHour}
-                    // onChange={(e) => rentHour(e.target.value)}
-                    onChange={getSelectedHr}>
+                  <select name="rentPeriod"
+                    defaultValue={rentPeriod}
+                    // onChange={(e) => rentPeriod(e.target.value)}
+                    onChange={getSelectedHr} disabled={item.isRenting}>
                     <option value="0">select time</option>
-                    <option value="0.5">30 mins</option>
                     <option value="1">1 hr</option>
                     <option value="2">2 hrs</option>
                     <option value="3">3 hrs</option>
                     <option value="4">4 hrs</option>
                   </select>
                 </div>
-                <div>
-                  {item.isRenting ? (
-                    <button className="button is-info is-outlined is-rounded is-pulled-right"
-                      disabled> Rent Now </button>
-                    ):(
-                    <button className="button is-info is-outlined is-rounded is-pulled-right"
-                      onClick={addToRenting}
-                      > Rent Now </button>
-                )}
-                </div>
+                <button className="button is-info is-outlined is-rounded is-pulled-right"
+                  onClick={addToRenting}
+                  // unable the button when item is rented 
+                  disabled={item.isRenting}
+                  >Rent Now</button>
               </div>
             </div>
           </div>
