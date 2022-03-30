@@ -10,7 +10,7 @@ export default function RentedHistory() {
   console.log("rented basket from RentedHistory.js: ", rentedBasket);
   // debugger;
 
-  //filter item from rentedBasket whose end time is over 
+  //filter item from rentedBasket whose end time is not over 
   const rentedBasketFiltered = rentedBasket.filter(
     (item) => item.endTime <= new Date()
   );
