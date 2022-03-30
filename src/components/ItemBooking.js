@@ -20,6 +20,10 @@ import CurrencyFormat from 'react-currency-format';
  */
 
 export default function ItemBooking(props) {
+  const [rentCurrency, setRentCurrency] = useState("CAD");
+  const getSelectedCy = e => {
+    setRentCurrency(e.target.value);
+  }
   // handle dropdown select
   const [rentPeriod, setRentHour] = useState(null);
   const getSelectedHr = e => {
@@ -130,14 +134,19 @@ export default function ItemBooking(props) {
                 <div className="field is-pulled-left">
                   <b className='title is-4 pr-3' style={{ textTransform: "capitalize" }}>{item.title}</b>
                   <div className="tag is-warning is-rounded">
+                    {rentCurrency === "CAD" ? (
                     <CurrencyFormat
-                      // renderTex={(value) => ({value})}
                       decimalScale={2}
                       value={item.cost}
                       displayType={"text"}
                       thousandSeparator={true}
                       prefix={"CAD $"}
-                    />/hr
+                    />):(<CurrencyFormat
+                      decimalScale={2}
+                      value={item.cost * 0.8}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"USD $"}/>)}/hr
                   </div>
                 </div>
                 <div className="field is-pulled-right">
@@ -166,14 +175,20 @@ export default function ItemBooking(props) {
                 </p>
                 <div className='field is-pulled-left'>
                   <strong>Total: </strong>
+                  {rentCurrency === "CAD" ? (
                   <CurrencyFormat
-                    // renderTex={(value) => ({value})}
                     decimalScale={2}
                     value={total(item.cost, rentPeriod)}
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"CAD $"}
-                  />
+                  />):(<CurrencyFormat
+                    decimalScale={2}
+                    value={total(item.cost * 0.8, rentPeriod)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"USD $"}
+                  />)}
                 </div>
                 <div className='field is-pulled-right'>payment api</div>
               </div>
@@ -194,6 +209,17 @@ export default function ItemBooking(props) {
                     <option value="4">4 hrs</option>
                   </select>
                 </div>
+              <div className="is-clearfix">
+                <div className="select is-rounded is-pulled-left">
+                  <select name="rentCurrency"
+                    defaultValue={rentCurrency}
+                    onChange={getSelectedCy} disabled={item.isRenting}>
+                    <option value="CAD">select currency</option>
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+              </div>
                 <button className="button is-info is-outlined is-rounded is-pulled-right"
                   onClick={addToRenting}
                   // unable the button when item is rented 

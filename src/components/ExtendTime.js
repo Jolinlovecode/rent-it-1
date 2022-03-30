@@ -6,7 +6,11 @@ import CurrencyFormat from 'react-currency-format';
 
 export default function ExtendTime(props) {
   const {item} = props;
-  
+
+  const [rentCurrency, setRentCurrency] = useState("CAD");
+  const getSelectedCy = e => {
+    setRentCurrency(e.target.value);
+  }
   // handle dropdown select
   const [extendedHour, setExtraHour] = useState(0);
   const getSelectedHr = e => {
@@ -101,12 +105,18 @@ export default function ExtendTime(props) {
               <p>Old End Time: {timeFormatDisplay(item.endTime)}</p>
               <br></br>
               <p>Extend for: <strong>{displayHrFormat(extendedHour)}</strong> at 
-               <CurrencyFormat
+              {rentCurrency === "CAD" ? (
+                <CurrencyFormat
                       decimalScale={2}
                       value={item.cost}
                       displayType={"text"}
                       thousandSeparator={true}
-                      prefix={" $"}/>
+                      prefix={ " CAD$"}/>):(<CurrencyFormat
+                        decimalScale={2}
+                        value={item.cost * 0.8}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={ " USD$"}/>)}
                 /hr price
               </p>
               <br></br>
@@ -115,21 +125,28 @@ export default function ExtendTime(props) {
                 <p><strong>New End Time: {timeFormatDisplay(calculateNewEndTime(item.endTime, extendedHour))}</strong></p>
               <div className='field is-pulled-left'>
                 <strong>New Total: </strong>
-                <CurrencyFormat
+                {rentCurrency === "CAD" ?
+                (<CurrencyFormat
                         decimalScale={2}
                         value={(item.cost * extendedHour)}
                         displayType={"text"}
                         thousandSeparator={true}
                         prefix={"CAD $"}
-                />
+                />):(<CurrencyFormat
+                  decimalScale={2}
+                  value={(item.cost *0.8 * extendedHour)}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  prefix={"USD $"}
+          />)}
               </div>
               <div className='field is-pulled-right'>payment api</div>
             </div>
           </div>
         ): ""}
         <div className="field has-addons">
-          <div className="control is-expanded">
-            <div className="select is-fullwidth is-small is-rounded">
+          <div className="is-clearfix">
+            <div className="select is-rounded is-pulled-left">
               <select name="extendedHour"
                 defaultValue={extendedHour}
                 onChange={getSelectedHr}>
@@ -140,6 +157,17 @@ export default function ExtendTime(props) {
               </select>
             </div>
           </div>
+          <div className="is-clearfix">
+                <div className="select is-rounded is-pulled-left">
+                  <select name="rentCurrency"
+                    defaultValue={rentCurrency}
+                    onChange={getSelectedCy} >
+                    <option value="CAD">select currency</option>
+                    <option value="CAD">CAD</option>
+                    <option value="USD">USD</option>
+                  </select>
+                </div>
+              </div>
           <div className="control">
             <button className="button is-success is-rounded is-small"
               type="submit" onClick={extendRentingTime} 
