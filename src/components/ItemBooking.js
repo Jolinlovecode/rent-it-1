@@ -30,7 +30,6 @@ export default function ItemBooking(props) {
   const [rentPeriod, setRentHour] = useState(null);
   const getSelectedHr = (e) => {
     setRentHour(e.target.value);
-    // console.log the previous selected value
     // console.log("selected rentPeriod from ItemBooking.js", rentPeriod);
   };
   // calculate endTime of the item
@@ -61,7 +60,7 @@ export default function ItemBooking(props) {
     //  console.log("props", props.items);
     const itemsToUpdate = [...props.items];
 
-    // find the specific item in allItems
+    // find the specific item in items
     const foundIndex = itemsToUpdate.findIndex((i) => {
       return i.id === item.id;
     });

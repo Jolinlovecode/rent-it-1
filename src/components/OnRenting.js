@@ -7,7 +7,7 @@ import OnRentingItem from "./OnRentingItem";
  */
 
 export default function OnRenting() {
-  const [{ rentingBasket }, dispatch] = useStateValue();
+  const [{ rentingBasket }] = useStateValue();
   console.log("renting basket from OnRenting.js: ", rentingBasket);
 
   // console.log(typeof (rentingBasket[0].cost))
@@ -23,31 +23,6 @@ export default function OnRenting() {
     <OnRentingItem key={item.id} {...item} />
   ));
 
-  // const expiryTime =
-
-  // setTimeout(async () => {
-  //   let data = new FormData();
-  // data.append("token", DESTROY_TOKEN);
-  // data.append("ref", "terraform-v1");
-  // data.append("variables[LAST_PIPELINE_ID]", pipelineId);
-  // config = {
-  //         method: "POST",
-  //         url: "http://localhost:3000/rented",
-  //         data: data,
-  //         headers: {
-  //             ...data.getHeaders(),
-  //         },
-  //     };
-
-  //     await axios(config).then(
-  //         () => {
-  //             console.log("Resources destroyed.");
-  //         },
-  //         (error) => {
-  //             console.log(`error : ${error}`);
-  //         }
-  //     );
-  // }, expiryTime);
 
   return (
     <div className="section">

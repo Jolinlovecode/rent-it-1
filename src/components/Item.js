@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import {Link} from 'react-router-dom';
-import ItemBooking from "./ItemBooking";
 import { useStateValue } from "../providers/StateProvider";
 // import Notification from "./Notification";
 /**
@@ -12,24 +11,8 @@ export default function Item(props) {
   const {...item} = props;
 
   // handle 'rent-now' button to get the data of the item
-  const [{rentingBasket}, dispatch] = useStateValue();
+  const [{rentingBasket}] = useStateValue();
   console.log("renting basket from Item.js: ", rentingBasket);
-  // const addToRenting = () => {
-  //   // push item into the context layer
-  //   dispatch({
-  //     type: "ADD_TO_RENTING",
-  //     item: {
-  //       ...item
-        // id: item.id,
-        // image: item.image,
-        // title: item.title,
-        // description: item.description,
-        // cost: item.cost,
-        // isRenting: item.isRenting,
-        // rentTime: item.rentTime
-  //     },
-  //   });
-  // }
 
   return (
 
@@ -58,10 +41,10 @@ export default function Item(props) {
             <div>{item.description}</div>
               {/* if using <button> handle() -> reducer and use the selectedItem{} */}
             <div className="container">
-              <Link className="button is-small is-outlined is-info is-pulled-right"
+              <Link className="button is-small is-success is-pulled-right"
                 to={item.isRenting ? '#' : `/items/${item.id}`}
                 disabled={item.isRenting}
-                >Go To Booking</Link>
+                >Book</Link>
             </div>
           </div>
         </div>
