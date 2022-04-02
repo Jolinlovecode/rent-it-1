@@ -81,4 +81,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 ## Screenshots
 ***Home page
-![home page](https://github.com/Jolinlovecode/e-commerce-rails/blob/master/Image/home-page.png?raw=true)
+![home page](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/cars.png?raw=true)
+***Item Booking
+![ItemBooking](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Select%20Renting%20Time.png?raw=true)
+![ItemBooking](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Select%20Renting%20Currency.png?raw=true)
+***Pay Form
+![Pay](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Pay.png?raw=true)
+***Extend Renting Time page
+![extend](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Extend%20Time.png?raw=true)
+***Renting History
+![history]()
