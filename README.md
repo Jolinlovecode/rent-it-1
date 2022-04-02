@@ -2,7 +2,7 @@
 The app lets users rent random items for their needs. 
 
 ---
-🤝 group project (team of 2): 👤[Jolin Zhang](https://github.com/Jolinlovecode) & 👤me
+🤝 group project (team of 2): 👤[Jolin Zhang](https://github.com/Jolinlovecode) & 👤[Tripleboba](https://github.com/tripleboba/rent-it)
 
 📎 [Project Planning Document](https://docs.google.com/document/d/1sMlIi3WJHp9NcmU6wGgn4QZvl4PSnnIVa_nAnSjeHhM/edit?usp=sharing)
 
@@ -20,11 +20,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+### `json-server --watch datajson/db.json`
+
+Runs the Json Server in one terminal.\
+Open [http://localhost:3000](http://localhost:3000).
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open another terminal to run the app in the development mode.\
+Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
@@ -76,10 +79,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Screenshots
+***Home page
+![home page](https://github.com/Jolinlovecode/e-commerce-rails/blob/master/Image/home-page.png?raw=true)
