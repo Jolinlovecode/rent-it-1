@@ -90,4 +90,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 ***Extend Renting Time page
 ![extend](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Extend%20Time.png?raw=true)
 ***Renting History
-![history]()
+![history](https://github.com/Jolinlovecode/rent-it-1/blob/master/Images/Renting%20History.png?raw=true)
