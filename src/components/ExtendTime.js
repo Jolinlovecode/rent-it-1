@@ -140,7 +140,6 @@ export default function ExtendTime(props) {
                   prefix={"USD $"}
           />)}
               </div>
-              <div className='field is-pulled-right'>payment api</div>
             </div>
           </div>
         ): ""}
